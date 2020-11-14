@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 - 2020 | Alexander01998 | All rights reserved.
+ * Copyright (c) 2014-2020 Wurst-Imperium and contributors.
  *
  * This source code is subject to the terms of the GNU General Public
  * License, version 3. If a copy of the GPL was not distributed with this
@@ -126,6 +126,29 @@ public final class TooManyHaxHack extends Hack
 			
 		}else
 			blockedFeatures.remove(feature);
+		
+		file.save();
+	}
+	
+	public void blockAll()
+	{
+		blockedFeatures.clear();
+		
+		ArrayList<Feature> features = new ArrayList<>();
+		features.addAll(WURST.getHax().getAllHax());
+		features.addAll(WURST.getCmds().getAllCmds());
+		features.addAll(WURST.getOtfs().getAllOtfs());
+		
+		for(Feature feature : features)
+		{
+			if(!feature.isSafeToBlock())
+				continue;
+			
+			blockedFeatures.add(feature);
+		}
+		
+		blockedFeatures
+			.sort(Comparator.comparing(f -> f.getName().toLowerCase()));
 		
 		file.save();
 	}
